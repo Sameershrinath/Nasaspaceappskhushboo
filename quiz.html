@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Space Quiz</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="backwards">
+  <header>
+    <div class="logo">
+      <img src="/image.jpg/logo.png" alt="logo image">
+    </div>
+    <nav>
+      <ul>
+        <li><a href="/i.html">Home</a></li>
+        <li><a href="/Planet.html">Planets</a></li>
+        <li><a href="/stars.html">Stars</a></li>
+        <li><a href="/quiz.html">Quiz</a></li>
+         <li><a href="/video.html">Videos</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="quiz-container">
+    <h1> 🚀Space Quiz </h1>
+    <div id="quiz"></div>
+    <div id="result" class="result"></div>
+  </div>
+
+  <script>
+    const allQuestions = [
+      {question: "Which planet is known as the Red Planet?", options: ["Venus","Mars","Jupiter","Mercury"], answer: "Mars"},
+      {question: "Which is the largest planet in our solar system?", options: ["Earth","Jupiter","Saturn","Neptune"], answer: "Jupiter"},
+      {question: "What is the name of our galaxy?", options: ["Andromeda","Milky Way","Whirlpool","Sombrero"], answer: "Milky Way"},
+      {question: "Which planet has the most moons?", options: ["Saturn","Jupiter","Uranus","Neptune"], answer: "Saturn"},
+      {question: "Which is the hottest planet in the solar system?", options: ["Mercury","Venus","Mars","Jupiter"], answer: "Venus"},
+      {question: "Which planet is tilted on its side?", options: ["Uranus","Neptune","Mars","Saturn"], answer: "Uranus"},
+      {question: "Which planet is closest to the Sun?", options: ["Venus","Earth","Mercury","Mars"], answer: "Mercury"},
+      {question: "What is the name of the closest star system to Earth?", options: ["Alpha Centauri","Sirius","Betelgeuse","Polaris"], answer: "Alpha Centauri"},
+      {question: "Which planet has a giant storm known as the Great Red Spot?", options: ["Saturn","Jupiter","Neptune","Venus"], answer: "Jupiter"},
+      {question: "Which is the densest planet in the solar system?", options: ["Earth","Jupiter","Mercury","Venus"], answer: "Earth"},
+      {question: "Which is the smallest planet?", options: ["Mars","Mercury","Venus","Pluto"], answer: "Mercury"},
+      {question: "Which is the brightest star in the night sky?", options: ["Sirius","Polaris","Betelgeuse","Rigel"], answer: "Sirius"},
+      {question: "Which planet is known as the Evening Star?", options: ["Venus","Mars","Mercury","Jupiter"], answer: "Venus"},
+      {question: "Galaxy closest to the Milky Way?", options: ["Whirlpool","Sombrero","Andromeda","Pinwheel"], answer: "Andromeda"},
+      {question: "Which constellation is known as the Hunter?", options: ["Orion","Ursa Major","Cassiopeia","Pegasus"], answer: "Orion"},
+      {question: "Which planet has rings made mostly of ice?", options: ["Neptune","Saturn","Jupiter","Uranus"], answer: "Saturn"},
+      {question: "Which planet has the fastest rotation?", options: ["Jupiter","Saturn","Earth","Mars"], answer: "Jupiter"},
+      {question: "Which planet is Earth’s twin?", options: ["Venus","Mars","Mercury","Neptune"], answer: "Venus"},
+      {question: "First artificial satellite launched?", options: ["Apollo 11","Sputnik 1","Voyager 1","Explorer 1"], answer: "Sputnik 1"},
+      {question: "Which planet is blue due to methane?", options: ["Uranus","Neptune","Saturn","Venus"], answer: "Neptune"},
+    ];
+
+    function shuffle(array) { return array.sort(() => Math.random() - 0.5); }
+    const questions = shuffle(allQuestions).slice(0, 10); // pick 10 random
+    const quizEl = document.getElementById("quiz");
+    const resultEl = document.getElementById("result");
+    let current = 0, score = 0;
+
+    function showQuestion() {
+      if (current >= questions.length) {
+        quizEl.innerHTML = "";
+        resultEl.innerHTML = `🎉 You scored ${score} / ${questions.length}`;
+        return;
+      }
+      let q = questions[current];
+      let shuffledOptions = shuffle([...q.options]);
+      quizEl.innerHTML = `
+        <div class="question">${current+1}. ${q.question}</div>
+        <div class="options">
+          ${shuffledOptions.map(opt => 
+            `<button onclick="checkAnswer('${opt}')">${opt}</button>`
+          ).join('')}
+        </div>
+      `;
+    }
+
+    function checkAnswer(option) {
+      if (option === questions[current].answer) score++;
+      current++;
+      showQuestion();
+    }
+
+    showQuestion();
+  </script>
+</body>
+</html>
